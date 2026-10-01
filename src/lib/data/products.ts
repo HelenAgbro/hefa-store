@@ -1,0 +1,139 @@
+import type { Product } from "@/lib/types";
+
+/**
+ * TEMPORARY LOCAL PRODUCT DATA.
+ *
+ * This stands in for a real backend/database. It lives here so it can be
+ * swapped for API calls later without changing any page or component.
+ * Prices are whole Naira.
+ */
+export const PRODUCTS: Product[] = [
+  {
+    id: "hefa-001",
+    slug: "adeola-tailored-trouser",
+    name: "Adeola Tailored Trouser",
+    price: 68000,
+    category: "Corporate",
+    colors: ["Charcoal", "Black"],
+    sizes: ["30", "32", "34", "36", "38"],
+    description:
+      "A clean, straight-leg trouser with a sharp centre crease — the backbone of the corporate wardrobe.",
+    details: ["Mid-weight wool blend", "Straight leg, mid-rise", "Dry clean only"],
+    swatch: "#2f2f2f",
+    featured: true,
+    badge: "Best seller",
+    inStock: true,
+  },
+  {
+    id: "hefa-002",
+    slug: "ngozi-wide-leg-pant",
+    name: "Ngozi Wide-Leg Pant",
+    price: 74000,
+    category: "Corporate",
+    colors: ["Black", "Forest"],
+    sizes: ["30", "32", "34", "36", "38"],
+    description:
+      "A fluid wide-leg silhouette with a high waist, cut to elongate and move effortlessly.",
+    details: ["Crepe suiting", "Wide leg, high-rise", "Dry clean only"],
+    swatch: "#0b0b0b",
+    featured: true,
+    inStock: true,
+  },
+  {
+    id: "hefa-003",
+    slug: "iwe-pleated-trouser",
+    name: "Ìwé Pleated Trouser",
+    price: 76000,
+    category: "Corporate",
+    colors: ["Forest", "Charcoal"],
+    sizes: ["30", "32", "34", "36"],
+    description:
+      "Front-pleated trousers in a deep forest tone, tailored for a crisp, modern office look.",
+    details: ["Double pleat", "Tapered leg", "Machine wash cold"],
+    swatch: "#1e3a2f",
+    inStock: true,
+  },
+  {
+    id: "hefa-004",
+    slug: "amara-high-waist-pant",
+    name: "Amara High-Waist Pant",
+    price: 58000,
+    category: "Casual",
+    colors: ["Ochre", "Cream"],
+    sizes: ["28", "30", "32", "34"],
+    description:
+      "A relaxed high-waist pant in warm ochre — an effortless anchor for weekend dressing.",
+    details: ["Cotton twill", "High-waist, relaxed leg", "Machine wash cold"],
+    swatch: "#b8860b",
+    featured: true,
+    badge: "New",
+    inStock: true,
+  },
+  {
+    id: "hefa-005",
+    slug: "zara-cropped-pant",
+    name: "Zara Cropped Pant",
+    price: 54000,
+    category: "Casual",
+    colors: ["Burnt Orange"],
+    sizes: ["28", "30", "32", "34"],
+    description:
+      "A cropped, tapered pant in a rich burnt orange, designed to be worn with loafers or sneakers.",
+    details: ["Structured cotton", "Cropped, tapered leg", "Machine wash cold"],
+    swatch: "#b4551f",
+    inStock: true,
+  },
+  {
+    id: "hefa-006",
+    slug: "ifeoma-fluid-pant",
+    name: "Ifeoma Fluid Pant",
+    price: 62000,
+    category: "Casual",
+    colors: ["Cream", "Ochre"],
+    sizes: ["28", "30", "32", "34"],
+    description:
+      "A soft, fluid pant in cream with a drawcord waist — comfort without losing shape.",
+    details: ["Tencel blend", "Drawcord waist", "Machine wash cold"],
+    swatch: "#e9e2d2",
+    featured: true,
+    inStock: true,
+  },
+  {
+    id: "hefa-007",
+    slug: "dami-classic-trouser",
+    name: "Dami Classic Trouser",
+    price: 66000,
+    category: "Corporate",
+    colors: ["Charcoal", "Black"],
+    sizes: ["30", "32", "34", "36", "38"],
+    description:
+      "An everyday tailored trouser with a slim leg and a subtle stretch for comfort in transit.",
+    details: ["Stretch wool blend", "Slim leg", "Dry clean only"],
+    swatch: "#3a3a3a",
+    inStock: true,
+  },
+  {
+    id: "hefa-008",
+    slug: "kehinde-relaxed-pant",
+    name: "Kehinde Relaxed Pant",
+    price: 56000,
+    category: "Casual",
+    colors: ["Forest", "Charcoal"],
+    sizes: ["28", "30", "32", "34", "36"],
+    description:
+      "A relaxed, easy pant in forest green, balancing comfort with a considered, modern line.",
+    details: ["Heavy cotton", "Relaxed leg", "Machine wash cold"],
+    swatch: "#274b3a",
+    inStock: false,
+  },
+];
+
+/** Products flagged for the homepage "Featured" section. */
+export function getFeaturedProducts(): Product[] {
+  return PRODUCTS.filter((product) => product.featured);
+}
+
+/** The full catalogue — used by the shop page. */
+export function getAllProducts(): Product[] {
+  return PRODUCTS;
+}

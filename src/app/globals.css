@@ -1,26 +1,61 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================================
+   HEFA — Global styles & design tokens
+   Brand direction: "Modern Afro-Minimalism"
+   Luxury neutrals + earth-tone accents · serif headings · sans body
+   ============================================================ */
+
+@theme {
+  /* ---- Colour palette ---- */
+  --color-black: #0b0b0b; /* Primary — near-black ink */
+  --color-cream: #f6f2ea; /* Primary neutral — warm cream */
+  --color-charcoal: #2f2f2f; /* Primary neutral — soft charcoal */
+  --color-burnt-orange: #b4551f; /* Accent — burnt orange */
+  --color-ochre: #b8860b; /* Accent — deep ochre */
+  --color-forest: #1e3a2f; /* Accent — forest green */
+
+  /* ---- Typography ---- */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-playfair), ui-serif, Georgia, "Times New Roman", serif;
+
+  /* ---- Letter spacing ---- */
+  --tracking-brand: 0.35em;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ---- Base element styles ---- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-black);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background-color: var(--color-burnt-orange);
+    color: var(--color-cream);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-burnt-orange);
+    outline-offset: 2px;
+  }
 }
