@@ -137,3 +137,31 @@ export function getFeaturedProducts(): Product[] {
 export function getAllProducts(): Product[] {
   return PRODUCTS;
 }
+
+/** Find a product by its URL slug (used by the product detail page). */
+export function getProductBySlug(slug: string): Product | undefined {
+  return PRODUCTS.find((product) => product.slug === slug);
+}
+
+/** Find a product by its id (used by the cart to resolve line items). */
+export function getProductById(id: string): Product | undefined {
+  return PRODUCTS.find((product) => product.id === id);
+}
+
+/**
+ * Image list for a product.
+ * Uses real images when provided, otherwise falls back to the generated
+ * placeholder photography in /public/images/products.
+ */
+export function getProductImages(product: Product): string[] {
+  if (product.images && product.images.length > 0) return product.images;
+  return [1, 2, 3].map((n) => `/images/products/${product.slug}-${n}.svg`);
+}
+
+/** Related products: same category first, then the rest of the catalogue. */
+export function getRelatedProducts(product: Product, limit = 4): Product[] {
+  const others = PRODUCTS.filter((item) => item.id !== product.id);
+  const sameCategory = others.filter((item) => item.category === product.category);
+  const different = others.filter((item) => item.category !== product.category);
+  return [...sameCategory, ...different].slice(0, limit);
+}

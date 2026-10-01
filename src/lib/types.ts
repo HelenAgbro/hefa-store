@@ -16,8 +16,10 @@ export interface Product {
   sizes: string[];
   description: string;
   details: string[];
-  /** Hex colour used as a stand-in for product photography until real images exist. */
+  /** Hex colour used as a fallback background when no photo is available. */
   swatch: string;
+  /** Optional image paths. Falls back to generated placeholders when omitted. */
+  images?: string[];
   /** Shows in the homepage "Featured" section. */
   featured?: boolean;
   /** Optional label such as "New" or "Best seller". */

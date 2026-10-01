@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1500" viewBox="0 0 1200 1500" role="img" aria-label="Ifeoma Fluid Pant">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e9e2d2"/><stop offset="1" stop-color="#bab5a8"/></linearGradient>
+<radialGradient id="glow" cx="30%" cy="22%" r="80%"><stop offset="0" stop-color="#ffffff" stop-opacity="0.18"/><stop offset="0.6" stop-color="#ffffff" stop-opacity="0.04"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></radialGradient>
+<pattern id="lines" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(135)"><line x1="0" y1="0" x2="0" y2="16" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/></pattern>
+</defs>
+<rect width="1200" height="1500" fill="url(#bg)"/>
+<rect width="1200" height="1500" fill="url(#lines)"/>
+<rect x="-120" y="660" width="1440" height="240" fill="#f6f2ea" fill-opacity="0.35" transform="rotate(-12 600 780)"/><circle cx="960" cy="380" r="150" fill="#f6f2ea" fill-opacity="0.40"/>
+<rect width="1200" height="1500" fill="url(#glow)"/>
+<text x="80" y="150" font-family="Georgia, 'Times New Roman', serif" font-size="42" letter-spacing="16" fill="#0b0b0b" fill-opacity="0.92">HEFA</text>
+<line x1="80" y1="196" x2="1120" y2="196" stroke="#0b0b0b" stroke-opacity="0.22" stroke-width="1"/>
+<text x="80" y="1315" font-family="Georgia, 'Times New Roman', serif" font-size="68" fill="#0b0b0b" fill-opacity="0.96">Ifeoma Fluid Pant</text>
+<text x="80" y="1380" font-family="Helvetica, Arial, sans-serif" font-size="28" letter-spacing="6" fill="#0b0b0b" fill-opacity="0.70">CASUAL  ·  VIEW 3 OF 3</text>
+</svg>

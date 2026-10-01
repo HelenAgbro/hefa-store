@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useCart } from "@/context/CartContext";
 import { BRAND, NAV_LINKS } from "@/lib/constants";
 
 /**
@@ -9,6 +10,7 @@ import { BRAND, NAV_LINKS } from "@/lib/constants";
  * A client component because it tracks open/closed state.
  */
 export function MobileMenu() {
+  const { openCart } = useCart();
   const [open, setOpen] = useState(false);
 
   // Stop the page behind the drawer from scrolling while it is open.
@@ -109,13 +111,16 @@ export function MobileMenu() {
               >
                 Sign In
               </Link>
-              <Link
-                href="/cart"
-                onClick={() => setOpen(false)}
-                className="text-charcoal transition-colors hover:text-burnt-orange"
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(false);
+                  openCart();
+                }}
+                className="text-left text-charcoal transition-colors hover:text-burnt-orange"
               >
                 Cart
-              </Link>
+              </button>
               <p className="pt-2 text-[0.65rem] tracking-[0.12em] text-charcoal/60">{BRAND.location}</p>
             </div>
           </div>
