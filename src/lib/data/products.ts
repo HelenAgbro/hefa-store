@@ -6,6 +6,22 @@ import type { Product } from "@/lib/types";
  * This stands in for a real backend/database. It lives here so it can be
  * swapped for API calls later without changing any page or component.
  * Prices are whole Naira.
+ *
+ * ------------------------------------------------------------------
+ * HOW TO USE YOUR OWN PRODUCT PHOTOGRAPHY
+ * ------------------------------------------------------------------
+ * Each product's `images` array drives the shop grid, the product page
+ * gallery, the mini-cart and the order summary. Right now every product
+ * points at generated placeholder artwork in /public/images/products.
+ *
+ * To switch to your real photos:
+ *   1. Save your files in  public/images/products/
+ *   2. Change the paths below to your filenames, for example:
+ *        images: ["/images/products/adeola-tailored-trouser-1.jpg"]
+ *
+ * Recommended: 3 images per product (front, side, detail), portrait 4:5
+ * (e.g. 1200 x 1500 px), saved as JPG or WebP to keep the pages fast.
+ * Only change this file — the whole site updates automatically.
  */
 export const PRODUCTS: Product[] = [
   {
@@ -20,6 +36,11 @@ export const PRODUCTS: Product[] = [
       "A clean, straight-leg trouser with a sharp centre crease — the backbone of the corporate wardrobe.",
     details: ["Mid-weight wool blend", "Straight leg, mid-rise", "Dry clean only"],
     swatch: "#2f2f2f",
+    images: [
+      "/images/products/adeola-tailored-trouser-1.svg",
+      "/images/products/adeola-tailored-trouser-2.svg",
+      "/images/products/adeola-tailored-trouser-3.svg",
+    ],
     featured: true,
     badge: "Best seller",
     inStock: true,
@@ -36,6 +57,11 @@ export const PRODUCTS: Product[] = [
       "A fluid wide-leg silhouette with a high waist, cut to elongate and move effortlessly.",
     details: ["Crepe suiting", "Wide leg, high-rise", "Dry clean only"],
     swatch: "#0b0b0b",
+    images: [
+      "/images/products/ngozi-wide-leg-pant-1.svg",
+      "/images/products/ngozi-wide-leg-pant-2.svg",
+      "/images/products/ngozi-wide-leg-pant-3.svg",
+    ],
     featured: true,
     inStock: true,
   },
@@ -51,6 +77,11 @@ export const PRODUCTS: Product[] = [
       "Front-pleated trousers in a deep forest tone, tailored for a crisp, modern office look.",
     details: ["Double pleat", "Tapered leg", "Machine wash cold"],
     swatch: "#1e3a2f",
+    images: [
+      "/images/products/iwe-pleated-trouser-1.svg",
+      "/images/products/iwe-pleated-trouser-2.svg",
+      "/images/products/iwe-pleated-trouser-3.svg",
+    ],
     inStock: true,
   },
   {
@@ -65,6 +96,11 @@ export const PRODUCTS: Product[] = [
       "A relaxed high-waist pant in warm ochre — an effortless anchor for weekend dressing.",
     details: ["Cotton twill", "High-waist, relaxed leg", "Machine wash cold"],
     swatch: "#b8860b",
+    images: [
+      "/images/products/amara-high-waist-pant-1.svg",
+      "/images/products/amara-high-waist-pant-2.svg",
+      "/images/products/amara-high-waist-pant-3.svg",
+    ],
     featured: true,
     badge: "New",
     inStock: true,
@@ -81,6 +117,11 @@ export const PRODUCTS: Product[] = [
       "A cropped, tapered pant in a rich burnt orange, designed to be worn with loafers or sneakers.",
     details: ["Structured cotton", "Cropped, tapered leg", "Machine wash cold"],
     swatch: "#b4551f",
+    images: [
+      "/images/products/zara-cropped-pant-1.svg",
+      "/images/products/zara-cropped-pant-2.svg",
+      "/images/products/zara-cropped-pant-3.svg",
+    ],
     inStock: true,
   },
   {
@@ -95,6 +136,11 @@ export const PRODUCTS: Product[] = [
       "A soft, fluid pant in cream with a drawcord waist — comfort without losing shape.",
     details: ["Tencel blend", "Drawcord waist", "Machine wash cold"],
     swatch: "#e9e2d2",
+    images: [
+      "/images/products/ifeoma-fluid-pant-1.svg",
+      "/images/products/ifeoma-fluid-pant-2.svg",
+      "/images/products/ifeoma-fluid-pant-3.svg",
+    ],
     featured: true,
     inStock: true,
   },
@@ -110,6 +156,11 @@ export const PRODUCTS: Product[] = [
       "An everyday tailored trouser with a slim leg and a subtle stretch for comfort in transit.",
     details: ["Stretch wool blend", "Slim leg", "Dry clean only"],
     swatch: "#3a3a3a",
+    images: [
+      "/images/products/dami-classic-trouser-1.svg",
+      "/images/products/dami-classic-trouser-2.svg",
+      "/images/products/dami-classic-trouser-3.svg",
+    ],
     inStock: true,
   },
   {
@@ -124,6 +175,11 @@ export const PRODUCTS: Product[] = [
       "A relaxed, easy pant in forest green, balancing comfort with a considered, modern line.",
     details: ["Heavy cotton", "Relaxed leg", "Machine wash cold"],
     swatch: "#274b3a",
+    images: [
+      "/images/products/kehinde-relaxed-pant-1.svg",
+      "/images/products/kehinde-relaxed-pant-2.svg",
+      "/images/products/kehinde-relaxed-pant-3.svg",
+    ],
     inStock: false,
   },
 ];

@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HEFA — Modern Nigerian Tailoring
 
-## Getting Started
+A premium Nigerian designer label storefront, built with **Next.js 16 (App Router)**, **TypeScript** and **Tailwind CSS v4**.
 
-First, run the development server:
+Design direction: *Modern Afro-Minimalism* — luxury neutrals (black, cream, charcoal) with earth-tone accents (burnt orange, deep ochre, forest green), serif headings and clean sans-serif body copy.
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev     # start the dev server at http://localhost:3000
+npm run build   # production build
+npm run start   # serve the production build
+npm run lint    # code quality checks
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Project layout
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+src/
+  app/           routes (pages) — file-based routing
+  components/    reusable UI (ui, layout, product, cart, checkout, home, account, auth, shop, contact)
+  context/       CartProvider + useCart (shared cart state)
+  lib/           data (local, temporary), helpers and validation logic
+public/          static assets
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Adding your product photography
 
-## Learn More
+All product images are driven by one file: **`src/lib/data/products.ts`**.
 
-To learn more about Next.js, take a look at the following resources:
+**1. Save your files** in `public/images/products/`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**2. Point a product at your files** by editing its `images` array:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```ts
+{
+  slug: "adeola-tailored-trouser",
+  images: [
+    "/images/products/adeola-tailored-trouser-1.jpg",
+    "/images/products/adeola-tailored-trouser-2.jpg",
+  ],
+}
+```
 
-## Deploy on Vercel
+That single change updates the **shop grid, homepage featured section, product page gallery, mini-cart, cart page and checkout summary**.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Recommendations
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Setting | Recommendation |
+|---------|----------------|
+| Images per product | 3 (front, side, detail) |
+| Aspect ratio | Portrait **4:5** (e.g. 1200 x 1500 px) |
+| Format | `.jpg` or `.webp` |
+| File size | Under ~500 KB each |
+| Background | Plain and uncluttered (the layout crops to 4:5) |
+
+### Campaign / lookbook photos
+
+Optional. Add an `image` field to any entry in `src/lib/data/lookbook.ts`:
+
+```ts
+{ id: "lb-1", title: "Lagos Mornings", swatch: "#2f2f2f", image: "/images/lookbook/lagos-mornings-1.jpg" }
+```
+
+### Using a CDN instead (Cloudinary, S3, etc.)
+
+Point the paths at your full URLs — remote images are handled automatically:
+
+```ts
+images: ["https://res.cloudinary.com/.../adeola-1.jpg"]
+```
+
+## Current status
+
+- Product, order, address and account data are **temporary local data** — no database is connected yet.
+- **Payments** are not connected. The checkout is a visual demo only.
+- **Authentication** is not connected. The login/account pages are layouts only.
+- **Email** delivery is not connected. The contact form validates but does not send.
+

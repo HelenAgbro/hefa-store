@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
@@ -30,7 +31,17 @@ export function LookbookPreview() {
               className="group relative block aspect-[4/5] overflow-hidden"
             >
               <div className="absolute inset-0" style={{ backgroundColor: entry.swatch }} />
-              <div className="absolute inset-0 opacity-20" style={SWATCH_TEXTURE} />
+              {entry.image ? (
+                <Image
+                  src={entry.image}
+                  alt={entry.title}
+                  fill
+                  sizes="(max-width: 1024px) 50vw, 33vw"
+                  className="object-cover"
+                />
+              ) : (
+                <div className="absolute inset-0 opacity-20" style={SWATCH_TEXTURE} />
+              )}
               <div className="absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/25" />
               <div className="absolute inset-x-0 bottom-0 translate-y-0 p-5 opacity-100 transition-all duration-500 lg:translate-y-2 lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100">
                 <p className="font-serif text-lg text-cream">{entry.title}</p>
