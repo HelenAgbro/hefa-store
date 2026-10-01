@@ -41,4 +41,6 @@ export interface LookbookEntry {
   title: string;
   caption: string;
   swatch: string;
+  /** Optional real photograph. Falls back to the colour swatch when absent. */
+  image?: string;
 }
