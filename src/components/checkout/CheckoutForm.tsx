@@ -1,6 +1,5 @@
 "use client";
 
-import { PaymentPlaceholder } from "@/components/checkout/PaymentPlaceholder";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import {
@@ -175,8 +174,22 @@ export function CheckoutForm({ values, errors, subtotal, onChange }: CheckoutFor
         </div>
       </fieldset>
 
-      {/* Payment (placeholder — future integration) */}
-      <PaymentPlaceholder />
+      {/* Payment — no card fields, because card data stays with Paystack */}
+      <fieldset>
+        <legend className="text-xs font-medium uppercase tracking-[0.35em] text-burnt-orange">
+          Payment
+        </legend>
+        <div className="mt-5 border border-black/10 p-5">
+          <p className="text-sm leading-relaxed text-charcoal/70">
+            You will pay on <strong className="font-medium text-black">Paystack</strong> after
+            reviewing your order. Pay by card, bank transfer or USSD.
+          </p>
+          <p className="mt-3 text-xs leading-relaxed text-charcoal/60">
+            Card details are entered on Paystack&apos;s secure page and are never seen or stored by
+            this site. We only receive confirmation that the payment succeeded.
+          </p>
+        </div>
+      </fieldset>
     </>
   );
 }

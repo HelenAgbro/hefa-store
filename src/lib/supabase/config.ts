@@ -36,3 +36,54 @@ export const isServiceRoleConfigured = Boolean(supabaseUrl && supabaseServiceRol
  * Set NEXT_PUBLIC_SITE_URL in production to your real domain.
  */
 export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+
+/**
+ * Paystack configuration.
+ *
+ * Two very different keys, and the difference matters:
+ *
+ *   PAYSTACK_SECRET_KEY             sk_test_… / sk_live_…  — SERVER ONLY. Signs
+ *                                    API calls and verifies webhook signatures.
+ *                                    Leaking it lets anyone issue refunds against
+ *                                    the account.
+ *   NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY pk_test_… / pk_live_… — identifies the
+ *                                    merchant to the checkout page. Safe to
+ *                                    expose, which is why it is prefixed.
+ *
+ * Test keys use test money: payments can be made with the published test cards
+ * and no real funds move.
+ *
+ * Kept here beside the Supabase keys so every server-side secret is read in one
+ * place, and so nothing needs a NEXT_PUBLIC_ prefix by accident.
+ */
+
+/** Paystack's REST API root. */
+export const PAYSTACK_API_BASE = "https://api.paystack.co";
+
+/** Server-only secret key. Undefined when Paystack is not configured. */
+export const paystackSecretKey = process.env.PAYSTACK_SECRET_KEY;
+
+/** Merchant public key, safe for the browser. */
+export const paystackPublicKey = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY;
+
+/** True when the storefront can take payments (needs at least the public key). */
+export const isPaystackConfigured = Boolean(paystackPublicKey);
+
+/** True when the server can actually call Paystack — needs the secret key. */
+export const isPaystackSecretConfigured = Boolean(paystackSecretKey);
+
+/**
+ * Convert Naira to kobo.
+ *
+ * Paystack expects every amount in the currency's **smallest unit**, so ₦68,000
+ * must be sent as 6800000. Sending 68000 would charge ₦680 instead of ₦68,000 —
+ * the single most common integration mistake here.
+ */
+export function nairaToKobo(naira: number): number {
+  return Math.round(naira * 100);
+}
+
+/** Convert kobo back to Naira, for comparing against our stored totals. */
+export function koboToNaira(kobo: number): number {
+  return Math.round(kobo) / 100;
+}

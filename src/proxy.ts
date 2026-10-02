@@ -16,8 +16,11 @@ export const config = {
      * - _next/static (build output)
      * - _next/image (image optimiser)
      * - favicon.ico
+     * - api/webhooks — machine-to-machine endpoints (Paystack). They carry no
+     *   session, and refreshing cookies on them would only add latency to a
+     *   request that must be acknowledged quickly.
      * - image files (svg, png, jpg, jpeg, gif, webp)
      */
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    "/((?!_next/static|_next/image|favicon.ico|api/webhooks|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };

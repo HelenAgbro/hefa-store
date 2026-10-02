@@ -113,15 +113,82 @@ value only ever belongs in `.env.local`.
 Without it, `getServiceClient()` throws a message explaining this rather than failing
 somewhere obscure.
 
+## Taking payments (Paystack)
+
+Checkout is live and takes payment through **Paystack**. Four pieces:
+
+| File | Role |
+|------|------|
+| `src/lib/checkout/actions.ts` | Prices the cart, saves a `pending` order, redirects to Paystack |
+| `src/lib/paystack/client.ts` | Server-only REST calls + webhook signature verification |
+| `src/app/checkout/verify/page.tsx` | Where the customer returns; confirms with Paystack |
+| `src/app/api/webhooks/paystack/route.ts` | Authoritative "payment succeeded" signal |
+
+### Required environment variables
+
+```bash
+PAYSTACK_SECRET_KEY=sk_test_...        # server only — signs calls and verifies webhooks
+NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY=pk_test_...
+```
+
+Get them from **Paystack → Settings → API Keys & Webhooks** with **Test mode ON**. Test
+keys move no real money. **Rotate the secret key before going live** if it has ever been
+shared — a leaked `sk_` key lets anyone issue refunds against the account.
+
+### Two independent checks confirm a payment
+
+This is deliberate, and it is the most important part of the integration:
+
+1. **The return page** asks Paystack directly whether the transaction succeeded, and
+   compares the amount charged against the amount we expected. A mismatch is never
+   confirmed. The redirect itself proves nothing — anyone can visit that URL.
+2. **The webhook** is an outbound request from Paystack to us, verified with an HMAC-SHA512
+   signature of the raw request body. Without this check, anyone who guessed the webhook
+   URL could mark orders paid for free.
+
+Both call the same idempotent `markPaid()`, so running twice changes nothing and Paystack's
+72 hours of retries cannot re-send an email.
+
+### Testing locally
+
+Card payments work against `localhost` with **no setup**:
+
+| Card | Outcome |
+|------|---------|
+| `4084 0840 8408 4081`, CVV `408` | ✅ succeeds |
+| `4084 0800 0000 5408`, CVV `001` | ❌ declined |
+| `4084 0800 0067 0037`, CVV `787` | ❌ insufficient funds |
+| `5060 6666 6666 6666 666` | ✅ PIN `1234`, OTP `123456` |
+
+Expiry can be any future date. The fallback on the return page means orders are still
+marked paid without a webhook.
+
+**Webhooks do need a public URL**, because Paystack cannot reach `localhost`:
+
+```bash
+brew install cloudflared
+cloudflared tunnel --url http://localhost:3000
+```
+
+Paste the resulting `https://….trycloudflare.com` URL into
+**Paystack → Settings → API Keys & Webhooks → Webhook URL**. The tunnel URL changes every
+time you restart it, so the dashboard needs updating each session. Note that in test mode
+Paystack only sends webhooks hourly, so do not wait on it — the return page covers you.
+
+Card details are never handled by this site. They are entered on Paystack's page and only
+the resulting reference comes back to us.
+
 ## Current status
 
 - Product catalogue is **live** in Supabase; `src/lib/data/products.ts` is the offline fallback.
 - **Authentication works** — Google and email/password, via Supabase Auth.
-- The **orders tables are ready**, but no order is created yet: checkout is still a demo.
-- **Payments** are not connected. Paystack is the intended gateway (Naira-first).
-- **Email** delivery is not connected. The contact form validates but does not send.
+- **Payments work** — Paystack test mode, wired end to end.
+- The **orders tables are ready** but must be created: run `supabase/orders.sql`.
+- **No confirmation email yet** — the webhook logs the payment, and the next step is to
+  send one from it.
 - `/account` is **not protected** and still shows sample order data.
 - Email confirmation is currently disabled in Supabase Auth — re-enable it and configure
   production SMTP before launch.
-- Two commits are still unpushed on `main`.
+- Pending: `ngozi-wide-leg-pant-3.jpg` carries a third-party "FABADORE" watermark.
+- Three or more commits are still unpushed on `main`.
 
