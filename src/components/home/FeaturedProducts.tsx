@@ -3,11 +3,11 @@ import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { getFeaturedProducts } from "@/lib/data/products";
+import { getFeaturedProducts } from "@/lib/products-repository";
 
-/** Featured products, pulled from the temporary local data. */
-export function FeaturedProducts() {
-  const products = getFeaturedProducts();
+/** Featured products, pulled from the catalogue repository. */
+export async function FeaturedProducts() {
+  const products = await getFeaturedProducts();
 
   return (
     <Section id="featured">

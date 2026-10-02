@@ -8,42 +8,42 @@ import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import {
-  getAllProducts,
   getProductBySlug,
   getProductImages,
   getRelatedProducts,
-} from "@/lib/data/products";
+} from "@/lib/products-repository";
 import { formatNaira } from "@/lib/format";
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>;
 }
 
-/** Pre-render a page for every product in the local catalogue. */
-export function generateStaticParams() {
-  return getAllProducts().map((product) => ({ slug: product.slug }));
-}
+/**
+ * The catalogue now comes from Supabase, so this page is rendered on demand
+ * and revalidated every 60 seconds instead of being pre-built at deploy time.
+ */
+export const revalidate = 60;
 
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
   if (!product) return { title: "Product not found" };
   return { title: product.name, description: product.description };
 }
 
 /**
  * Product detail page.
- * Loads one product from the local catalogue, shows the gallery and purchase
- * panel, and lists related pieces.
+ * Loads one product from the repository (Supabase, with a local fallback),
+ * shows the gallery and purchase panel, and lists related pieces.
  */
 export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
 
   if (!product) notFound();
 
   const images = getProductImages(product);
-  const related = getRelatedProducts(product, 4);
+  const related = await getRelatedProducts(product, 4);
 
   return (
     <>

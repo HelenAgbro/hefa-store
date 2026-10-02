@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ShopCatalog } from "@/components/shop/ShopCatalog";
 import { Container } from "@/components/ui/Container";
-import { getAllProducts } from "@/lib/data/products";
+import { getAllProducts } from "@/lib/products-repository";
 
 export const metadata: Metadata = {
   title: "Shop",
@@ -9,13 +9,16 @@ export const metadata: Metadata = {
     "Shop the HEFA pants line — tailored trousers for the corporate and casual wardrobe.",
 };
 
+/** Revalidate periodically so catalogue changes appear quickly. */
+export const revalidate = 60;
+
 /**
  * Shop / catalog page.
- * Loads the local catalogue and hands it to the interactive ShopCatalog,
- * which handles filtering and sorting in the browser.
+ * Loads the catalogue (Supabase, with a local fallback) and hands it to the
+ * interactive ShopCatalog, which handles filtering and sorting in the browser.
  */
-export default function ShopPage() {
-  const products = getAllProducts();
+export default async function ShopPage() {
+  const products = await getAllProducts();
 
   return (
     <>
