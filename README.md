@@ -25,13 +25,14 @@ src/
 public/          static assets
 ```
 
-## Adding your product photography
+## Product photography
 
-All product images are driven by one file: **`src/lib/data/products.ts`**.
+Every product points at real photography in `public/images/products/`, named after
+its own slug — `adeola-tailored-trouser-1.jpg`, `ngozi-wide-leg-pant-2.jpg`, etc.
 
-**1. Save your files** in `public/images/products/`.
+**1. Save new files** in `public/images/products/`, keeping that `<slug>-<n>.jpg` naming.
 
-**2. Point a product at your files** by editing its `images` array:
+**2. Reference them** on the product by editing its `images` array:
 
 ```ts
 {
@@ -44,6 +45,11 @@ All product images are driven by one file: **`src/lib/data/products.ts`**.
 ```
 
 That single change updates the **shop grid, homepage featured section, product page gallery, mini-cart, cart page and checkout summary**.
+
+> **Note:** the live catalogue is read from Supabase, so the database is what visitors
+> actually see. After editing `src/lib/data/products.ts`, re-run `supabase/schema.sql`
+> in the Supabase SQL editor to sync the change. `src/lib/data/products.ts` is the
+> offline fallback and the two are kept in sync deliberately.
 
 ### Recommendations
 

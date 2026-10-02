@@ -15,7 +15,7 @@ interface CartLineItemProps {
 /** A single cart line — reused by both the mini-cart drawer and the cart page. */
 export function CartLineItem({ item, onNavigate }: CartLineItemProps) {
   const { updateQuantity, removeItem } = useCart();
-  const image = item.product.images?.[0] ?? `/images/products/${item.product.slug}-1.svg`;
+  const image = item.product.images?.[0] ?? `/images/products/${item.product.slug}-1.jpg`;
 
   return (
     <div className="flex gap-4">

@@ -23,7 +23,7 @@ export function OrderSummary({ shippingMethod }: OrderSummaryProps) {
 
       <ul className="mt-6 flex flex-col divide-y divide-black/10">
         {items.map((item) => {
-          const image = item.product.images?.[0] ?? `/images/products/${item.product.slug}-1.svg`;
+          const image = item.product.images?.[0] ?? `/images/products/${item.product.slug}-1.jpg`;
           return (
             <li key={item.id} className="flex gap-4 py-4 first:pt-0">
               <div className="relative aspect-[4/5] w-14 shrink-0 overflow-hidden bg-charcoal">

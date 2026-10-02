@@ -53,38 +53,38 @@ insert into public.products
 values
   (
     'hefa-001', 'adeola-tailored-trouser', 'Adeola Tailored Trouser', 68000, 'Corporate',
-    array['Charcoal', 'Black'], array['30', '32', '34', '36', '38'],
-    'A clean, straight-leg trouser with a sharp centre crease — the backbone of the corporate wardrobe.',
-    array['Mid-weight wool blend', 'Straight leg, mid-rise', 'Dry clean only'],
-    '#2f2f2f',
-    array['/images/products/adeola-tailored-trouser-1.svg', '/images/products/adeola-tailored-trouser-2.svg', '/images/products/adeola-tailored-trouser-3.svg'],
+    array['Navy', 'Indigo'], array['30', '32', '34', '36', '38'],
+    'A navy pinstripe wide-leg trouser in a crisp suiting — sharp for the boardroom, easy for every other day.',
+    array['Pinstripe suiting', 'Wide leg, mid-rise', 'Dry clean only'],
+    '#1f2a44',
+    array['/images/products/adeola-tailored-trouser-1.jpg'],
     true, 'Best seller', true
   ),
   (
-    'hefa-002', 'ngozi-wide-leg-pant', 'Ngozi Wide-Leg Pant', 74000, 'Corporate',
-    array['Black', 'Forest'], array['30', '32', '34', '36', '38'],
-    'A fluid wide-leg silhouette with a high waist, cut to elongate and move effortlessly.',
-    array['Crepe suiting', 'Wide leg, high-rise', 'Dry clean only'],
-    '#0b0b0b',
-    array['/images/products/ngozi-wide-leg-pant-1.svg', '/images/products/ngozi-wide-leg-pant-2.svg', '/images/products/ngozi-wide-leg-pant-3.svg'],
+    'hefa-002', 'ngozi-wide-leg-pant', 'Ngozi Wide-Leg Pant', 74000, 'Casual',
+    array['Multicolour', 'Red'], array['30', '32', '34', '36', '38'],
+    'A statement wide-leg in signature Afro-print, finished with patch pockets and a full, flowing hem.',
+    array['Printed viscose', 'Wide leg, high-rise', 'Machine wash cold'],
+    '#b03a2e',
+    array['/images/products/ngozi-wide-leg-pant-1.jpg', '/images/products/ngozi-wide-leg-pant-2.jpg', '/images/products/ngozi-wide-leg-pant-3.jpg'],
     true, null, true
   ),
   (
     'hefa-003', 'iwe-pleated-trouser', 'Ìwé Pleated Trouser', 76000, 'Corporate',
-    array['Forest', 'Charcoal'], array['30', '32', '34', '36', '38'],
-    'Front-pleated trousers in a deep forest tone, tailored for a crisp, modern office look.',
-    array['Double pleat', 'Tapered leg', 'Machine wash cold'],
-    '#1e3a2f',
-    array['/images/products/iwe-pleated-trouser-1.svg', '/images/products/iwe-pleated-trouser-2.svg', '/images/products/iwe-pleated-trouser-3.svg'],
+    array['Aubergine', 'Plum'], array['30', '32', '34', '36'],
+    'A deep aubergine pleated wide-leg — polished in the office, striking after hours.',
+    array['Double pleat', 'Wide leg, high-rise', 'Dry clean only'],
+    '#4a2540',
+    array['/images/products/iwe-pleated-trouser-1.jpg'],
     false, null, true
   ),
   (
     'hefa-004', 'amara-high-waist-pant', 'Amara High-Waist Pant', 58000, 'Casual',
-    array['Ochre', 'Cream'], array['28', '30', '32', '34'],
-    'A relaxed high-waist pant in warm ochre — an effortless anchor for weekend dressing.',
-    array['Cotton twill', 'High-waist, relaxed leg', 'Machine wash cold'],
-    '#b8860b',
-    array['/images/products/amara-high-waist-pant-1.svg', '/images/products/amara-high-waist-pant-2.svg', '/images/products/amara-high-waist-pant-3.svg'],
+    array['Ochre', 'Mustard'], array['28', '30', '32', '34'],
+    'A relaxed high-waist harem pant in warm mustard — an effortless anchor for weekend dressing.',
+    array['Printed cotton', 'Elastic high-waist, relaxed leg', 'Machine wash cold'],
+    '#e0a526',
+    array['/images/products/amara-high-waist-pant-1.jpg'],
     true, 'New', true
   )
 on conflict (id) do update set
@@ -99,39 +99,39 @@ insert into public.products
 values
   (
     'hefa-005', 'zara-cropped-pant', 'Zara Cropped Pant', 54000, 'Casual',
-    array['Burnt Orange'], array['28', '30', '32', '34'],
-    'A cropped, tapered pant in a rich burnt orange, designed to be worn with loafers or sneakers.',
-    array['Structured cotton', 'Cropped, tapered leg', 'Machine wash cold'],
-    '#b4551f',
-    array['/images/products/zara-cropped-pant-1.svg', '/images/products/zara-cropped-pant-2.svg', '/images/products/zara-cropped-pant-3.svg'],
+    array['Grey', 'Charcoal'], array['28', '30', '32', '34'],
+    'A cropped tailored trouser in cool grey with an asymmetric wrap panel — made to be worn with loafers.',
+    array['Wool blend', 'Cropped, tapered leg', 'Dry clean only'],
+    '#6b7280',
+    array['/images/products/zara-cropped-pant-1.jpg'],
     false, null, true
   ),
   (
     'hefa-006', 'ifeoma-fluid-pant', 'Ifeoma Fluid Pant', 62000, 'Casual',
-    array['Cream', 'Ochre'], array['28', '30', '32', '34'],
-    'A soft, fluid pant in cream with a drawcord waist — comfort without losing shape.',
-    array['Tencel blend', 'Drawcord waist', 'Machine wash cold'],
+    array['Cream', 'Ivory'], array['28', '30', '32', '34'],
+    'A soft ivory wide-leg with a clean pleated front — comfort that still holds its shape.',
+    array['Tencel blend', 'Pleated wide leg, mid-rise', 'Machine wash cold'],
     '#e9e2d2',
-    array['/images/products/ifeoma-fluid-pant-1.svg', '/images/products/ifeoma-fluid-pant-2.svg', '/images/products/ifeoma-fluid-pant-3.svg'],
+    array['/images/products/ifeoma-fluid-pant-1.jpg'],
     true, null, true
   ),
   (
     'hefa-007', 'dami-classic-trouser', 'Dami Classic Trouser', 66000, 'Corporate',
-    array['Charcoal', 'Black'], array['30', '32', '34', '36', '38'],
-    'An everyday tailored trouser with a slim leg and a subtle stretch for comfort in transit.',
-    array['Stretch wool blend', 'Slim leg', 'Dry clean only'],
-    '#3a3a3a',
-    array['/images/products/dami-classic-trouser-1.svg', '/images/products/dami-classic-trouser-2.svg', '/images/products/dami-classic-trouser-3.svg'],
+    array['Camel', 'Ochre'], array['30', '32', '34', '36', '38'],
+    'A warm camel pleated trouser — the classic neutral that quietly carries a whole wardrobe.',
+    array['Wool blend', 'Pleated wide leg', 'Dry clean only'],
+    '#b98b5e',
+    array['/images/products/dami-classic-trouser-1.jpg'],
     false, null, true
   ),
   (
     'hefa-008', 'kehinde-relaxed-pant', 'Kehinde Relaxed Pant', 56000, 'Casual',
-    array['Forest', 'Charcoal'], array['28', '30', '32', '34', '36'],
-    'A relaxed, easy pant in forest green, balancing comfort with a considered, modern line.',
-    array['Heavy cotton', 'Relaxed leg', 'Machine wash cold'],
-    '#274b3a',
-    array['/images/products/kehinde-relaxed-pant-1.svg', '/images/products/kehinde-relaxed-pant-2.svg', '/images/products/kehinde-relaxed-pant-3.svg'],
-    false, null, false
+    array['Olive', 'Forest'], array['28', '30', '32', '34', '36'],
+    'A relaxed, easy pant in olive green, balancing comfort with a considered, modern line.',
+    array['Heavy cotton', 'Relaxed wide leg', 'Machine wash cold'],
+    '#6b7d3a',
+    array['/images/products/kehinde-relaxed-pant-1.jpg'],
+    false, null, true
   )
 on conflict (id) do update set
   slug = excluded.slug, name = excluded.name, price = excluded.price,
