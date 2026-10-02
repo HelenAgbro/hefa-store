@@ -26,8 +26,8 @@ export default function LookbookPage() {
           </p>
           <h1 className="mt-4 text-4xl sm:text-5xl">Lookbook</h1>
           <p className="mt-4 max-w-xl text-sm leading-relaxed text-charcoal/80">
-            Our debut campaign, photographed on location in Lagos. Tailored pants styled for the
-            studio, the street and the space in between.
+            Our debut campaign, photographed on location in Lagos. Tailored
+            pants styled for the studio, the street and the space in between.
           </p>
         </Container>
       </section>
@@ -37,7 +37,10 @@ export default function LookbookPage() {
         <section>
           <Container className="py-10 sm:py-14">
             <figure className="relative aspect-[16/10] w-full overflow-hidden bg-charcoal sm:aspect-[16/8]">
-              <div className="absolute inset-0" style={{ backgroundColor: feature.swatch }} />
+              <div
+                className="absolute inset-0"
+                style={{ backgroundColor: feature.swatch }}
+              />
               {feature.image ? (
                 <Image
                   src={feature.image}
@@ -47,10 +50,15 @@ export default function LookbookPage() {
                   className="object-cover"
                 />
               ) : (
-                <div className="absolute inset-0 opacity-20" style={SWATCH_TEXTURE} />
+                <div
+                  className="absolute inset-0 opacity-20"
+                  style={SWATCH_TEXTURE}
+                />
               )}
               <figcaption className="absolute bottom-6 left-6 sm:bottom-8 sm:left-8">
-                <p className="font-serif text-2xl text-cream sm:text-3xl">{feature.title}</p>
+                <p className="font-serif text-2xl text-cream sm:text-3xl">
+                  {feature.title}
+                </p>
                 <p className="mt-1 text-[0.65rem] uppercase tracking-[0.18em] text-cream/75">
                   {feature.caption}
                 </p>
@@ -70,7 +78,10 @@ export default function LookbookPage() {
                 key={entry.id}
                 className="relative aspect-[4/5] overflow-hidden"
               >
-                <div className="absolute inset-0" style={{ backgroundColor: entry.swatch }} />
+                <div
+                  className="absolute inset-0"
+                  style={{ backgroundColor: entry.swatch }}
+                />
                 {entry.image ? (
                   <Image
                     src={entry.image}
@@ -80,7 +91,10 @@ export default function LookbookPage() {
                     className="object-cover"
                   />
                 ) : (
-                  <div className="absolute inset-0 opacity-20" style={SWATCH_TEXTURE} />
+                  <div
+                    className="absolute inset-0 opacity-20"
+                    style={SWATCH_TEXTURE}
+                  />
                 )}
                 <figcaption className="absolute inset-x-0 bottom-0 p-5">
                   <p className="font-serif text-lg text-cream">{entry.title}</p>
