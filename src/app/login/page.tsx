@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { AuthForm } from "@/components/auth/AuthForm";
+import { GoogleSignInButton } from "@/components/auth/GoogleSignInButton";
 import { Container } from "@/components/ui/Container";
 
 export const metadata: Metadata = {
@@ -7,8 +8,14 @@ export const metadata: Metadata = {
   description: "Sign in to your HEFA account to track orders and save addresses.",
 };
 
-/** Login page. Visual only — authentication is not connected yet. */
-export default function LoginPage() {
+interface LoginPageProps {
+  searchParams: Promise<{ message?: string; error?: string }>;
+}
+
+/** Login page — Google sign-in and email/password, both backed by Supabase Auth. */
+export default async function LoginPage({ searchParams }: LoginPageProps) {
+  const { message, error } = await searchParams;
+
   return (
     <>
       <section className="border-b border-black/10">
@@ -24,10 +31,31 @@ export default function LoginPage() {
         <Container className="py-10 sm:py-14">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-20">
             <div className="max-w-md">
-              <p className="mb-6 border border-dashed border-black/20 bg-black/[0.02] px-4 py-3 text-xs leading-relaxed text-charcoal/70">
-                <strong className="font-medium text-black">Demo only.</strong> Sign-in is not
-                connected yet — the form will not log you in.
-              </p>
+              {message === "confirm-email" ? (
+                <p className="mb-6 border border-forest/30 bg-forest/5 px-4 py-3 text-xs leading-relaxed text-forest">
+                  Account created. Please check your email to confirm your address, then sign in.
+                </p>
+              ) : null}
+
+              {error ? (
+                <p
+                  role="alert"
+                  className="mb-6 border border-burnt-orange/40 bg-burnt-orange/5 px-4 py-3 text-xs leading-relaxed text-burnt-orange"
+                >
+                  {error}
+                </p>
+              ) : null}
+
+              <GoogleSignInButton />
+
+              <div className="my-6 flex items-center gap-4">
+                <span className="h-px flex-1 bg-black/15" />
+                <span className="text-[0.65rem] uppercase tracking-[0.18em] text-charcoal/50">
+                  or use email
+                </span>
+                <span className="h-px flex-1 bg-black/15" />
+              </div>
+
               <AuthForm mode="login" />
             </div>
 

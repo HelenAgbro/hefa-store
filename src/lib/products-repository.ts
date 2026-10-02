@@ -1,6 +1,24 @@
+import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { PRODUCTS } from "@/lib/data/products";
-import { supabase } from "@/lib/supabase/client";
+import {
+  isSupabaseConfigured,
+  supabasePublishableKey,
+  supabaseUrl,
+} from "@/lib/supabase/config";
 import type { Product } from "@/lib/types";
+
+/**
+ * Public read-only client for the catalogue.
+ *
+ * Product reads are public (Row Level Security allows SELECT for everyone), so
+ * they need neither the user's session nor cookies. That keeps the catalogue
+ * pages cacheable and avoids tying them to an auth session.
+ */
+const publicClient = isSupabaseConfigured
+  ? createSupabaseClient(supabaseUrl as string, supabasePublishableKey as string, {
+      auth: { persistSession: false, autoRefreshToken: false },
+    })
+  : null;
 
 /**
  * Product data access.
@@ -43,9 +61,9 @@ function rowToProduct(row: Record<string, unknown>): Product {
 }
 
 async function fetchCatalogue(): Promise<Product[] | null> {
-  if (!supabase) return null;
+  if (!publicClient) return null;
 
-  const { data, error } = await supabase.from("products").select(COLUMNS).order("id");
+  const { data, error } = await publicClient.from("products").select(COLUMNS).order("id");
 
   if (error) {
     console.warn("[products] Supabase error, using local data:", error.message);

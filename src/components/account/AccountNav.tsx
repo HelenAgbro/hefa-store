@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { signOut } from "@/lib/auth/actions";
 import { cn } from "@/lib/utils";
 
 const ITEMS = [
@@ -37,12 +38,14 @@ export function AccountNav() {
         );
       })}
 
-      <Link
-        href="/login"
-        className="whitespace-nowrap py-3 text-xs uppercase tracking-[0.18em] text-charcoal/50 transition-colors hover:text-burnt-orange lg:mt-2 lg:border-t lg:border-black/10 lg:pt-5"
-      >
-        Sign out
-      </Link>
+      <form action={signOut} className="lg:mt-2 lg:border-t lg:border-black/10 lg:pt-5">
+        <button
+          type="submit"
+          className="whitespace-nowrap py-3 text-xs uppercase tracking-[0.18em] text-charcoal/50 transition-colors hover:text-burnt-orange"
+        >
+          Sign out
+        </button>
+      </form>
     </nav>
   );
 }
