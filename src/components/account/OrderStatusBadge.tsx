@@ -1,14 +1,14 @@
-import type { OrderStatus } from "@/lib/data/account";
+import type { OrderDisplayStatus } from "@/lib/data/account";
 import { cn } from "@/lib/utils";
 
-const STYLES: Record<OrderStatus, string> = {
+const STYLES: Record<OrderDisplayStatus, string> = {
   Processing: "border-ochre/40 text-ochre",
   Shipped: "border-forest/40 text-forest",
   Delivered: "border-black/20 text-charcoal",
 };
 
 /** Small status pill for account orders. */
-export function OrderStatusBadge({ status }: { status: OrderStatus }) {
+export function OrderStatusBadge({ status }: { status: OrderDisplayStatus }) {
   return (
     <span
       className={cn(

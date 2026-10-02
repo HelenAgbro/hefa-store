@@ -1,8 +1,9 @@
 /**
  * TEMPORARY account data.
  *
- * Stands in for a real backend. No authentication or order storage is
- * connected yet — everything here is sample data for the layouts.
+ * Stands in for a real backend. Order history here is sample data for the
+ * layouts — the live version is read from the orders table via
+ * src/lib/orders/repository.ts.
  */
 
 export interface OrderLine {
@@ -10,13 +11,19 @@ export interface OrderLine {
   quantity: number;
 }
 
-export type OrderStatus = "Processing" | "Shipped" | "Delivered";
+/**
+ * The capitalised label shown on a status pill.
+ *
+ * Distinct from OrderStatus in @/lib/types, which holds the raw lowercase values
+ * stored in the database.
+ */
+export type OrderDisplayStatus = "Processing" | "Shipped" | "Delivered";
 
 export interface AccountOrder {
   id: string;
   reference: string;
   date: string;
-  status: OrderStatus;
+  status: OrderDisplayStatus;
   /** Total in Naira. */
   total: number;
   items: OrderLine[];

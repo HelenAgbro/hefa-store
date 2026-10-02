@@ -44,3 +44,65 @@ export interface LookbookEntry {
   /** Optional real photograph. Falls back to the colour swatch when absent. */
   image?: string;
 }
+
+/**
+ * Where an order is in its life.
+ *
+ *   pending  — created at checkout, payment not yet confirmed
+ *   paid     — Paystack confirmed the charge
+ *   ...      — then progressed manually by the studio as it ships
+ *
+ * These are the raw database values (lowercase), unlike the capitalised labels
+ * shown to the customer.
+ */
+export type OrderStatus =
+  | "pending"
+  | "paid"
+  | "processing"
+  | "shipped"
+  | "delivered"
+  | "cancelled"
+  | "refunded";
+
+export interface OrderItem {
+  productId: string;
+  /** Snapshotted at purchase time, so later catalogue edits never rewrite history. */
+  productName: string;
+  productSlug: string;
+  color: string;
+  size: string;
+  quantity: number;
+  /** Price per unit in whole Naira, at the time of purchase. */
+  unitPrice: number;
+  /** unitPrice × quantity. */
+  lineTotal: number;
+}
+
+export interface Order {
+  id: string;
+  /** Short customer-facing reference, e.g. "HEFA-1042". */
+  reference: string;
+  /** Null for guest checkout. */
+  userId: string | null;
+  email: string;
+  phone: string;
+  status: OrderStatus;
+  /** Money is whole Naira throughout, matching the products table. */
+  subtotal: number;
+  shipping: number;
+  total: number;
+  currency: string;
+  shippingMethod: string;
+  shippingLabel: string;
+  address1: string;
+  address2: string | null;
+  city: string;
+  region: string;
+  postalCode: string;
+  country: string;
+  /** Paystack's reference. Null until payment succeeds. */
+  paymentReference: string | null;
+  paidAt: string | null;
+  createdAt: string;
+  items: OrderItem[];
+}

@@ -77,10 +77,51 @@ Point the paths at your full URLs — remote images are handled automatically:
 images: ["https://res.cloudinary.com/.../adeola-1.jpg"]
 ```
 
+## Orders
+
+The `orders` and `order_items` tables are defined in **`supabase/orders.sql`** — run that
+file in the Supabase SQL editor to create them. It is separate from `schema.sql` so that a
+pricing change never forces a catalogue re-seed.
+
+Orders are **never written from the browser**. The cart lives in `localStorage`, so its
+prices and totals can be edited by hand, and the database policies deliberately refuse
+client writes. Instead:
+
+1. **`priceCart()`** (`src/lib/orders/repository.ts`) re-reads every product from the
+   `products` table and rebuilds the totals from scratch, including the ₦150,000
+   free-shipping rule. The amount charged is always the database figure.
+2. **`createOrder()`** writes a `pending` order using the **service-role key** — that is
+   what lets a guest, who has no signed-in session, still place an order.
+3. **`markPaid()`** moves it to `paid` when Paystack's webhook arrives. The update only
+   matches rows still `pending`, so Paystack's 72 hours of retries cannot double-mark an
+   order or re-send a confirmation email.
+
+Product name, slug and unit price are **snapshotted** onto `order_items`, so editing a
+price later never rewrites what a customer actually paid.
+
+### Required environment variable
+
+```bash
+# Supabase → Project Settings → API Keys → the service_role key
+SUPABASE_SERVICE_ROLE_KEY=sb_secret_...
+```
+
+It must **not** have a `NEXT_PUBLIC_` prefix — that would inline it into the JavaScript
+bundle and hand it to every visitor. `.env.example` lists it as a placeholder; the real
+value only ever belongs in `.env.local`.
+
+Without it, `getServiceClient()` throws a message explaining this rather than failing
+somewhere obscure.
+
 ## Current status
 
-- Product, order, address and account data are **temporary local data** — no database is connected yet.
-- **Payments** are not connected. The checkout is a visual demo only.
-- **Authentication** is not connected. The login/account pages are layouts only.
+- Product catalogue is **live** in Supabase; `src/lib/data/products.ts` is the offline fallback.
+- **Authentication works** — Google and email/password, via Supabase Auth.
+- The **orders tables are ready**, but no order is created yet: checkout is still a demo.
+- **Payments** are not connected. Paystack is the intended gateway (Naira-first).
 - **Email** delivery is not connected. The contact form validates but does not send.
+- `/account` is **not protected** and still shows sample order data.
+- Email confirmation is currently disabled in Supabase Auth — re-enable it and configure
+  production SMTP before launch.
+- Two commits are still unpushed on `main`.
 
