@@ -15,8 +15,8 @@ export default function AccountOverviewPage() {
   return (
     <div className="flex flex-col gap-10">
       <p className="border border-dashed border-black/20 bg-black/[0.02] px-4 py-3 text-xs leading-relaxed text-charcoal/70">
-        <strong className="font-medium text-black">Demo account.</strong> Sign-in is not connected
-        yet, so this dashboard shows sample data.
+        <strong className="font-medium text-black">Sample data.</strong> Orders are not yet loaded
+        from your account — this page shows placeholder examples while we finish that work.
       </p>
 
       <div>

@@ -31,6 +31,7 @@ export function CheckoutForm({ values, errors, subtotal, onChange }: CheckoutFor
         <div className="mt-5 grid gap-5 sm:grid-cols-2">
           <Input
             id="firstName"
+            name="firstName"
             label="First name"
             autoComplete="given-name"
             value={values.firstName}
@@ -39,6 +40,7 @@ export function CheckoutForm({ values, errors, subtotal, onChange }: CheckoutFor
           />
           <Input
             id="lastName"
+            name="lastName"
             label="Last name"
             autoComplete="family-name"
             value={values.lastName}
@@ -47,6 +49,7 @@ export function CheckoutForm({ values, errors, subtotal, onChange }: CheckoutFor
           />
           <Input
             id="email"
+            name="email"
             type="email"
             label="Email"
             placeholder="you@email.com"
@@ -57,6 +60,7 @@ export function CheckoutForm({ values, errors, subtotal, onChange }: CheckoutFor
           />
           <Input
             id="phone"
+            name="phone"
             type="tel"
             label="Phone"
             placeholder="+234 800 000 0000"
@@ -76,6 +80,7 @@ export function CheckoutForm({ values, errors, subtotal, onChange }: CheckoutFor
         <div className="mt-5 flex flex-col gap-5">
           <Input
             id="address1"
+            name="address1"
             label="Address line 1"
             autoComplete="address-line1"
             value={values.address1}
@@ -84,6 +89,7 @@ export function CheckoutForm({ values, errors, subtotal, onChange }: CheckoutFor
           />
           <Input
             id="address2"
+            name="address2"
             label="Address line 2 (optional)"
             autoComplete="address-line2"
             value={values.address2}
@@ -92,6 +98,7 @@ export function CheckoutForm({ values, errors, subtotal, onChange }: CheckoutFor
           <div className="grid gap-5 sm:grid-cols-2">
             <Input
               id="city"
+              name="city"
               label="City"
               autoComplete="address-level2"
               value={values.city}
@@ -100,6 +107,7 @@ export function CheckoutForm({ values, errors, subtotal, onChange }: CheckoutFor
             />
             <Input
               id="region"
+              name="region"
               label="State / Region"
               autoComplete="address-level1"
               value={values.region}
@@ -110,6 +118,7 @@ export function CheckoutForm({ values, errors, subtotal, onChange }: CheckoutFor
           <div className="grid gap-5 sm:grid-cols-2">
             <Input
               id="postalCode"
+              name="postalCode"
               label="Postal code (optional)"
               autoComplete="postal-code"
               value={values.postalCode}
@@ -117,6 +126,7 @@ export function CheckoutForm({ values, errors, subtotal, onChange }: CheckoutFor
             />
             <Select
               id="country"
+              name="country"
               label="Country"
               autoComplete="country-name"
               value={values.country}

@@ -1,12 +1,28 @@
+import { redirect } from "next/navigation";
 import type { ReactNode } from "react";
 import { AccountNav } from "@/components/account/AccountNav";
 import { Container } from "@/components/ui/Container";
+import { getCurrentUser } from "@/lib/auth/session";
 
 /**
  * Account area layout: shared heading + sidebar navigation, wrapping every
- * /account sub-page. NOTE: this is not protected — no authentication exists yet.
+ * /account sub-page.
+ *
+ * This layout IS the gate. Every /account route renders inside it, so one check
+ * here protects the overview, orders, addresses and settings pages together.
+ *
+ * Without it, anyone who guessed "/account" saw a signed-in dashboard with a
+ * customer name, email, phone and full address — data belonging to whoever used
+ * the demo build. The pages behind it currently show sample data rather than the
+ * signed-in person's own orders, but the layout must not depend on that: it is
+ * the wrong kind of protection, because the day real data lands behind it with
+ * the gate still missing, the data leaks.
  */
-export default function AccountLayout({ children }: { children: ReactNode }) {
+export default async function AccountLayout({ children }: { children: ReactNode }) {
+  // No session means someone typed the address by hand, or followed a stale link.
+  const user = await getCurrentUser();
+  if (!user) redirect("/login");
+
   return (
     <>
       <section className="border-b border-black/10">
