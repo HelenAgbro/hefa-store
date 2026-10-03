@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
@@ -7,11 +8,14 @@ export function BrandStory() {
   return (
     <Section id="story" className="bg-black text-cream">
       <Container className="grid items-center gap-12 lg:grid-cols-2">
-        {/* Decorative composition (placeholder for brand imagery). */}
-        <div className="relative aspect-[4/5] w-full overflow-hidden bg-charcoal lg:aspect-square">
-          <div className="absolute inset-y-0 right-0 w-1/3 bg-ochre" />
-          <div className="absolute bottom-0 left-0 h-1/2 w-2/3 bg-forest" />
-          <div className="absolute top-10 left-10 h-16 w-16 rounded-full bg-burnt-orange" />
+        <div className="relative aspect-[3/4] w-full overflow-hidden bg-charcoal">
+          <Image
+            src="/images/hefa-story.jpg"
+            alt="Patchwork denim wide-leg trousers styled for the HEFA brand story."
+            fill
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            className="object-cover"
+          />
         </div>
 
         <div className="max-w-xl">

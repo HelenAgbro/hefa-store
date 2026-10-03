@@ -21,6 +21,84 @@
 
   /* ---- Letter spacing ---- */
   --tracking-brand: 0.35em;
+
+  /* ---- Motion ----
+     Animations only. Every one of these is opt-in per element and is
+     switched off entirely for visitors who ask for reduced motion — see the
+     `prefers-reduced-motion` block at the bottom of this file, which is what
+     guarantees nothing can get stranded invisible. */
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-word-up: word-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-image-reveal: image-reveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-marquee: marquee 34s linear infinite;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Used inside an overflow-hidden mask so each word slides up from behind an
+   invisible edge — the headline assembles word by word. */
+@keyframes word-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 105%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes image-reveal {
+  from {
+    opacity: 0;
+    transform: scale(1.08);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* The track holds two identical halves, so -50% lands exactly on the seam. */
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* ============================================================
+   Scroll reveal
+   ------------------------------------------------------------
+   Driven by the `Reveal` component, which writes `data-reveal`
+   straight to the DOM node — no React state involved.
+
+   Nothing here applies until JavaScript sets the attribute, so the
+   server-rendered page is always fully visible on its own.
+   ============================================================ */
+[data-reveal="hidden"] {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+}
+
+[data-reveal="shown"] {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
 }
 
 /* ---- Base element styles ---- */
@@ -57,5 +135,33 @@
   :focus-visible {
     outline: 2px solid var(--color-burnt-orange);
     outline-offset: 2px;
+  }
+}
+
+/* ============================================================
+   Reduced motion
+   ------------------------------------------------------------
+   Each animation above starts from `opacity: 0` with `fill-mode:
+   both`, so simply switching the animation off would leave every
+   one of those elements stuck at zero opacity — a blank page for
+   anyone who has asked their device for less movement.
+
+   So this block does not just stop the animation: it also forces
+   the end state back on the element. `Reveal` (which sets its
+   hidden state in JavaScript rather than CSS) checks the same
+   preference and never hides anything in the first place.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up,
+  .animate-word-up,
+  .animate-image-reveal,
+  .animate-marquee {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  html {
+    scroll-behavior: auto;
   }
 }

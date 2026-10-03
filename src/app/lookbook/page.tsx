@@ -32,11 +32,13 @@ export default function LookbookPage() {
         </Container>
       </section>
 
-      {/* Feature spread */}
+      {/* Feature spread. The frame is portrait because every campaign
+          photograph is portrait — at 16/10 the image optimiser would crop
+          roughly half the height out of each shot. */}
       {feature ? (
         <section>
           <Container className="py-10 sm:py-14">
-            <figure className="relative aspect-[16/10] w-full overflow-hidden bg-charcoal sm:aspect-[16/8]">
+            <figure className="relative mx-auto aspect-[3/4] w-full max-w-2xl overflow-hidden bg-charcoal">
               <div
                 className="absolute inset-0"
                 style={{ backgroundColor: feature.swatch }}
@@ -46,7 +48,7 @@ export default function LookbookPage() {
                   src={feature.image}
                   alt={feature.title}
                   fill
-                  sizes="(max-width: 640px) 100vw, 90vw"
+                  sizes="(max-width: 640px) 100vw, 42rem"
                   className="object-cover"
                 />
               ) : (
@@ -55,6 +57,7 @@ export default function LookbookPage() {
                   style={SWATCH_TEXTURE}
                 />
               )}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
               <figcaption className="absolute bottom-6 left-6 sm:bottom-8 sm:left-8">
                 <p className="font-serif text-2xl text-cream sm:text-3xl">
                   {feature.title}

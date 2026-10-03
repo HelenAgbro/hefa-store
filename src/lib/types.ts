@@ -32,8 +32,10 @@ export interface Category {
   name: CategoryName;
   description: string;
   href: string;
-  /** Hex colour stand-in for category imagery. */
+  /** Hex colour stand-in, used only when `image` is absent. */
   swatch: string;
+  /** Editorial photograph for the category card. */
+  image?: string;
 }
 
 export interface LookbookEntry {
