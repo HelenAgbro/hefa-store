@@ -8,10 +8,10 @@ export const CATEGORIES: Category[] = [
     description: "Sharp, tailored trousers for the office and beyond.",
     href: "/shop",
     swatch: "#2f2f2f",
-    // NOTE: `public/images/category-corporate.png` was supplied for this slot
-    // but is a blank 300x150 rectangle, so the navy pinstripe product shot
-    // stands in until a real corporate photograph replaces it.
-    image: "/images/products/adeola-tailored-trouser-1.jpg",
+    // WARNING: this photograph still carries a visible stock-image watermark
+    // and is not licensed for commercial use. Replace it with a HEFA-owned
+    // shot before it reaches a real customer.
+    image: "/images/category-corporate.jpg",
   },
   {
     slug: "casual",
