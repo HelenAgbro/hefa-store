@@ -8,9 +8,9 @@ export const CATEGORIES: Category[] = [
     description: "Sharp, tailored trousers for the office and beyond.",
     href: "/shop",
     swatch: "#2f2f2f",
-    // WARNING: this photograph still carries a visible stock-image watermark
-    // and is not licensed for commercial use. Replace it with a HEFA-owned
-    // shot before it reaches a real customer.
+    // Kept deliberately: the client approved this photograph. Note it still
+    // carries a stock-image watermark, so confirm the licence before the site
+    // takes real orders.
     image: "/images/category-corporate.jpg",
   },
   {

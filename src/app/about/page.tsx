@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
@@ -68,13 +69,19 @@ export default function AboutPage() {
             </p>
           </div>
 
-          {/* Decorative composition (placeholder for brand photography). */}
+          {/* Studio photograph. The caption sits on a gradient rather than
+              relying on the image happening to be dark at that corner. */}
           <div className="relative aspect-[4/5] w-full overflow-hidden bg-charcoal">
-            <div className="absolute inset-y-0 right-0 w-1/3 bg-cream" />
-            <div className="absolute bottom-0 left-0 h-1/2 w-2/3 bg-forest" />
-            <div className="absolute top-10 left-10 h-16 w-16 rounded-full bg-burnt-orange" />
-            <div className="absolute right-8 bottom-8 max-w-[9rem]">
-              <span className="font-serif text-2xl leading-tight text-black">Made in Lagos</span>
+            <Image
+              src="/images/lookbook-atlantic.jpg"
+              alt="Emerald pleated trousers styled in the HEFA studio."
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+            <div className="absolute right-6 bottom-6 sm:right-8 sm:bottom-8">
+              <span className="font-serif text-2xl leading-tight text-cream">Made in Lagos</span>
             </div>
           </div>
         </Container>
