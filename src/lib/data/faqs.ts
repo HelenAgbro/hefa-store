@@ -35,14 +35,14 @@ export const FAQS: FaqItem[] = [
     category: "Orders & Payment",
     question: "Which payment methods do you accept?",
     answer:
-      "We will accept Naira and international cards through a secure Nigerian payment gateway. Payments are not connected in this preview build, so no payment can currently be taken.",
+      "We accept Naira and international cards through a secure Nigerian payment gateway. Your card details are entered on their page and never touch this site. This build runs in Paystack test mode, so no real money moves and no real card is charged.",
   },
   {
     id: "faq-order",
     category: "Orders & Payment",
     question: "Will I get an order confirmation?",
     answer:
-      "Yes. Once orders are live, a confirmation email is sent immediately after checkout, followed by a dispatch notification when your parcel leaves our studio.",
+      "Yes — a confirmation email is sent as soon as your payment is confirmed, with your reference, the items and the delivery address. Keep the reference: it is the quickest way for us to find your order.",
   },
   {
     id: "faq-stock",

@@ -1,8 +1,10 @@
 import { ClearCartOnSuccess } from "@/components/checkout/ClearCart";
 import { Button } from "@/components/ui/Button";
+import { sendOrderConfirmation } from "@/lib/email/order-confirmation";
 import { formatNaira } from "@/lib/format";
 import { markPaid, getOrderByReference } from "@/lib/orders/repository";
 import { verifyTransaction } from "@/lib/paystack/client";
+import { isEmailDeliverableToCustomers } from "@/lib/supabase/config";
 import type { Order } from "@/lib/types";
 
 /**
@@ -26,7 +28,7 @@ export async function CheckoutResult({ reference }: { reference: string | null }
     return (
       <Shell
         heading="We could not find your order"
-        body="This page opens automatically after payment. If you have just paid, check your email for a confirmation, or contact us with the reference you were given."
+        body="This page opens automatically after payment. If you have just paid, contact us with the reference you were given and we will look it up."
       />
     );
   }
@@ -43,7 +45,7 @@ export async function CheckoutResult({ reference }: { reference: string | null }
     return (
       <Shell
         heading="We could not find that order"
-        body="Check the reference in your confirmation email, or contact us and we will look it up."
+        body="Check the reference you were given, or contact us with the email address you used and we will look it up."
       />
     );
   }
@@ -61,7 +63,11 @@ export async function CheckoutResult({ reference }: { reference: string | null }
     return (
       <Shell
         heading="We could not confirm your payment yet"
-        body="We are checking with our payment provider. Your order is safe — if the payment went through you will receive a confirmation email shortly. Please do not pay again."
+        body={
+          isEmailDeliverableToCustomers
+            ? "We are checking with our payment provider. Your order is safe — if the payment went through you will receive a confirmation email shortly. Please do not pay again."
+            : "We are checking with our payment provider. Your order is safe — note your reference and contact us if you do not hear from us. Please do not pay again."
+        }
       />
     );
   }
@@ -93,8 +99,19 @@ export async function CheckoutResult({ reference }: { reference: string | null }
     );
   }
 
-  // Safe to repeat: only a still-pending order is moved.
-  await markPaid(order.reference, reference);
+  // Safe to repeat: only a still-pending order is moved, so exactly one caller —
+  // here or the webhook, whichever arrives first — sees newlyPaid. That flag is
+  // what stops one purchase sending two receipts.
+  const { newlyPaid } = await markPaid(order.reference, reference);
+
+  // Best-effort. The payment is already confirmed, so a mail failure must not
+  // change what the customer is told.
+  if (newlyPaid) {
+    const email = await sendOrderConfirmation(order);
+    if (!email.sent) {
+      console.warn(`[checkout] Receipt for ${order.reference} not sent: ${email.skippedReason}`);
+    }
+  }
 
   return <Success order={order} />;
 }
@@ -111,9 +128,18 @@ function Success({ order }: { order: Order }) {
         </p>
         <h2 className="mt-4 text-3xl">Thank you, we have your order.</h2>
         <p className="mt-3 text-sm leading-relaxed text-charcoal/70">
-          A confirmation email is on its way to{" "}
-          <strong className="font-medium text-black">{order.email}</strong>. Keep your
-          reference for any questions about this order.
+          {isEmailDeliverableToCustomers ? (
+            <>
+              A confirmation email is on its way to{" "}
+              <strong className="font-medium text-black">{order.email}</strong>. Keep your
+              reference for any questions about this order.
+            </>
+          ) : (
+            <>
+              Confirmation emails are not switched on yet, so please keep this page or note your
+              reference — it is how we will find your order.
+            </>
+          )}
         </p>
 
         <dl className="mt-8 grid gap-4 border-y border-black/10 py-6 text-sm sm:grid-cols-2">

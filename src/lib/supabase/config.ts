@@ -73,6 +73,53 @@ export const isPaystackConfigured = Boolean(paystackPublicKey);
 export const isPaystackSecretConfigured = Boolean(paystackSecretKey);
 
 /**
+ * Email configuration (order confirmations).
+ *
+ * Lives here beside the other server secrets, following the same rule the file
+ * opens with: every server-side secret is read in one place, and nothing picks
+ * up a NEXT_PUBLIC_ prefix by accident.
+ *
+ *   RESEND_API_KEY  server only. Authorises the send. Treat it like the Paystack
+ *                   secret key — with it, anyone can send mail as the brand.
+ *   EMAIL_FROM      The address customers see, e.g. "HEFA <orders@hefastore.com>".
+ *
+ * Sending is deliberately optional: with no key the store still records every
+ * order and the email step logs that it was skipped. That keeps local work and a
+ * demo deployment working with no third-party account.
+ */
+
+/** Resend's REST API root. */
+export const RESEND_API_BASE = "https://api.resend.com";
+
+/** Server-only Resend key. Undefined when email is not configured. */
+export const resendApiKey = process.env.RESEND_API_KEY;
+
+/**
+ * The From address shown to customers.
+ *
+ * The fallback is Resend's shared testing sender. That domain is only allowed to
+ * deliver to the address that owns the Resend account, so it is fine for trying
+ * the template out and useless for real customers. Set EMAIL_FROM to an address
+ * on a domain you have verified once you have one.
+ */
+export const emailFrom = process.env.EMAIL_FROM ?? "HEFA <onboarding@resend.dev>";
+
+/** True when the server can send email at all. */
+export const isEmailConfigured = Boolean(resendApiKey);
+
+/**
+ * True when a confirmation email would actually reach a customer.
+ *
+ * Deliberately stricter than isEmailConfigured. A key alone is not enough: while
+ * the sender is still resend.dev, every send to a customer is rejected by Resend
+ * with a 403 — the testing domain only delivers to the account owner. The UI
+ * uses this flag to decide whether it may *promise* an email, so the storefront
+ * never claims something it cannot do.
+ */
+export const isEmailDeliverableToCustomers =
+  isEmailConfigured && !emailFrom.toLowerCase().includes("resend.dev");
+
+/**
  * Convert Naira to kobo.
  *
  * Paystack expects every amount in the currency's **smallest unit**, so ₦68,000

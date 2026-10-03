@@ -184,11 +184,20 @@ the resulting reference comes back to us.
 - **Authentication works** — Google and email/password, via Supabase Auth.
 - **Payments work** — Paystack test mode, wired end to end.
 - The **orders tables are ready** but must be created: run `supabase/orders.sql`.
-- **No confirmation email yet** — the webhook logs the payment, and the next step is to
-  send one from it.
-- `/account` is **not protected** and still shows sample order data.
+- **Confirmation emails are implemented but not yet delivering to customers.** The code is
+  complete: the webhook and the return page both call the same idempotent `markPaid()`, so
+  whichever arrives first sends exactly one receipt. Delivery needs a `RESEND_API_KEY` and
+  an `EMAIL_FROM` on a domain verified at resend.com/domains. Until both are set the
+  storefront detects it and says so on the confirmation page rather than promising an
+  email it cannot send.
+- `/account` is behind sign-in — its layout redirects to `/login`. The pages it guards
+  still render sample data rather than the signed-in customer's own orders.
+- `hello@hefastore.com` is advertised on the site, but the domain is not owned, so mail to
+  that address currently goes nowhere. Point it at a real inbox before launch.
 - Email confirmation is currently disabled in Supabase Auth — re-enable it and configure
   production SMTP before launch.
 - Pending: `ngozi-wide-leg-pant-3.jpg` carries a third-party "FABADORE" watermark.
-- Three or more commits are still unpushed on `main`.
+- Commits are still unpushed on `main`. This network rejects any upload over roughly
+  600KB, which is smaller than one of the commits; push from another network or via the
+  GitHub UI.
 
