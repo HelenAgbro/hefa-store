@@ -1,8 +1,10 @@
 import Image from "next/image";
+import { Fragment } from "react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 
 const HEADLINE = "Tailored pants, made for the modern African wardrobe.";
+const WORDS = HEADLINE.split(" ");
 
 /**
  * Landing hero: editorial copy alongside the debut campaign photograph.
@@ -21,23 +23,27 @@ export function Hero() {
             The debut collection
           </p>
 
-          <h1 className="mt-6 text-4xl leading-[1.06] sm:text-5xl lg:text-[3.6rem]">
-            {HEADLINE.split(" ").map((word, index) => (
-              // Each word sits in its own overflow-hidden mask, so it rises
-              // from behind an invisible edge. The padding/negative-margin pair
-              // gives descenders (the p, the g) room without shifting layout.
-              <span
-                key={`${word}-${index}`}
-                className="-mb-[0.14em] inline-block overflow-hidden pb-[0.14em] align-bottom"
-              >
-                <span
-                  className="inline-block animate-word-up"
-                  style={{ animationDelay: `${300 + index * 60}ms` }}
-                >
-                  {word}
+          <h1 className="mt-6 text-4xl leading-[1.12] sm:text-5xl lg:text-[3.6rem]">
+            {WORDS.map((word, index) => (
+              // The separating space has to sit BETWEEN the masks, never inside
+              // one. An inline-block collapses trailing whitespace at the end of
+              // its own line box, so a space inside the mask renders as nothing
+              // and the words run together.
+              //
+              // The padding/negative-margin pair gives the descenders (the p,
+              // the g) room inside the mask without changing the height the
+              // word contributes to the line, since the two cancel exactly.
+              <Fragment key={`${word}-${index}`}>
+                <span className="inline-block overflow-hidden align-bottom pb-[0.16em] -mb-[0.16em]">
+                  <span
+                    className="inline-block animate-word-up"
+                    style={{ animationDelay: `${300 + index * 60}ms` }}
+                  >
+                    {word}
+                  </span>
                 </span>
-                {index < HEADLINE.split(" ").length - 1 ? " " : null}
-              </span>
+                {index < WORDS.length - 1 ? " " : null}
+              </Fragment>
             ))}
           </h1>
 
