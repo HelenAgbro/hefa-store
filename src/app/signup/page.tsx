@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AuthAside } from "@/components/auth/AuthAside";
 import { AuthForm } from "@/components/auth/AuthForm";
 import { GoogleSignInButton } from "@/components/auth/GoogleSignInButton";
 import { Container } from "@/components/ui/Container";
@@ -54,16 +55,7 @@ export default async function SignupPage({ searchParams }: SignupPageProps) {
             </div>
 
             {/* Decorative brand panel (desktop only). */}
-            <div className="relative hidden min-h-[420px] overflow-hidden bg-charcoal lg:block">
-              <div className="absolute inset-y-0 right-0 w-1/3 bg-cream" />
-              <div className="absolute bottom-0 left-0 h-1/2 w-2/3 bg-burnt-orange" />
-              <div className="absolute top-10 left-10 h-16 w-16 rounded-full bg-ochre" />
-              <div className="absolute right-8 bottom-8 max-w-[9rem]">
-                <span className="font-serif text-2xl leading-tight text-black">
-                  Modern Afro-Minimalism
-                </span>
-              </div>
-            </div>
+            <AuthAside image="/images/products/kehinde-relaxed-pant-1.jpg" tone="charcoal" />
           </div>
         </Container>
       </section>

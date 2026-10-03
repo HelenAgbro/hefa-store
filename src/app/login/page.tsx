@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AuthAside } from "@/components/auth/AuthAside";
 import { AuthForm } from "@/components/auth/AuthForm";
 import { GoogleSignInButton } from "@/components/auth/GoogleSignInButton";
 import { Container } from "@/components/ui/Container";
@@ -60,16 +61,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
             </div>
 
             {/* Decorative brand panel (desktop only). */}
-            <div className="relative hidden min-h-[420px] overflow-hidden bg-forest lg:block">
-              <div className="absolute inset-y-0 left-0 w-1/3 bg-cream" />
-              <div className="absolute right-0 bottom-0 h-1/2 w-2/3 bg-ochre" />
-              <div className="absolute top-10 right-10 h-16 w-16 rounded-full bg-burnt-orange" />
-              <div className="absolute bottom-8 left-8 max-w-[9rem]">
-                <span className="font-serif text-2xl leading-tight text-black">
-                  Modern Afro-Minimalism
-                </span>
-              </div>
-            </div>
+            <AuthAside image="/images/products/dami-classic-trouser-1.jpg" tone="forest" />
           </div>
         </Container>
       </section>
