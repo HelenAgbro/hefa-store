@@ -351,9 +351,17 @@ async function loadItems(orderIds: string[]): Promise<Map<string, OrderItem[]>> 
  * One order by its customer-facing reference.
  *
  * Deliberately not filtered by user, because the confirmation page needs it for
- * guests who have no session. References are random four-digit numbers, so treat
- * one as a lookup token rather than something enumerable, and never print it in a
- * place an unrelated person could reach.
+ * guests who have no session.
+ *
+ * The reference is a four-digit number and is NOT a secret: it is short enough to
+ * guess, so this function must never be reachable straight from a public URL.
+ * The confirmation page therefore requires a signed access token as well — see
+ * src/lib/orders/access-token.ts — and shows the same not-found answer for a bad
+ * token as for a reference that does not exist, so it cannot be used to discover
+ * which references are real.
+ *
+ * Server-side callers (the Paystack webhook, markPaid) are already trusted and
+ * do not need a token.
  */
 export async function getOrderByReference(reference: string): Promise<Order | null> {
   const supabase = getServiceClient();

@@ -2,6 +2,7 @@ import { ClearCartOnSuccess } from "@/components/checkout/ClearCart";
 import { Button } from "@/components/ui/Button";
 import { sendOrderConfirmation } from "@/lib/email/order-confirmation";
 import { formatNaira } from "@/lib/format";
+import { verifyOrderAccessToken } from "@/lib/orders/access-token";
 import { markPaid, getOrderByReference } from "@/lib/orders/repository";
 import { verifyTransaction } from "@/lib/paystack/client";
 import { isEmailDeliverableToCustomers } from "@/lib/supabase/config";
@@ -23,12 +24,34 @@ import type { Order } from "@/lib/types";
  * pending. So if the webhook is unreachable — which it is on localhost without a
  * tunnel — the order is still marked correctly here.
  */
-export async function CheckoutResult({ reference }: { reference: string | null }) {
+export async function CheckoutResult({
+  reference,
+  token,
+}: {
+  reference: string | null;
+  token: string | null;
+}) {
   if (!reference) {
     return (
       <Shell
         heading="We could not find your order"
         body="This page opens automatically after payment. If you have just paid, contact us with the reference you were given and we will look it up."
+      />
+    );
+  }
+
+  // The reference alone is not enough to see a receipt. It is four digits and
+  // this URL is public, so a valid token — carried only in the callback URL
+  // Paystack redirected the customer to — is required as well.
+  //
+  // A bad token gets exactly the same answer as a reference that does not
+  // exist. Distinct messages would turn this page into an oracle that reveals
+  // which references are real.
+  if (!verifyOrderAccessToken(reference, token)) {
+    return (
+      <Shell
+        heading="We could not find that order"
+        body="Check the reference you were given, or contact us with the email address you used and we will look it up."
       />
     );
   }

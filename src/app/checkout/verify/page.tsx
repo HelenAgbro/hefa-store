@@ -19,9 +19,9 @@ export const metadata: Metadata = {
 export default async function CheckoutVerifyPage({
   searchParams,
 }: {
-  searchParams: Promise<{ reference?: string }>;
+  searchParams: Promise<{ reference?: string; token?: string }>;
 }) {
-  const { reference } = await searchParams;
+  const { reference, token } = await searchParams;
 
   return (
     <>
@@ -36,7 +36,7 @@ export default async function CheckoutVerifyPage({
 
       <section>
         <Container className="py-10 sm:py-14">
-          <CheckoutResult reference={reference ?? null} />
+          <CheckoutResult reference={reference ?? null} token={token ?? null} />
         </Container>
       </section>
     </>

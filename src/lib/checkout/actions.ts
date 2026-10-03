@@ -9,6 +9,7 @@ import {
   type CheckoutErrors,
   type CheckoutValues,
 } from "@/lib/checkout";
+import { createOrderAccessToken } from "@/lib/orders/access-token";
 import { OrderError, createOrder } from "@/lib/orders/repository";
 import { initializeTransaction, PaystackError } from "@/lib/paystack/client";
 import { isPaystackConfigured, siteUrl } from "@/lib/supabase/config";
@@ -154,7 +155,9 @@ export async function startCheckout(
       firstName: values.firstName,
       lastName: values.lastName,
       phone: order.phone,
-      callbackUrl: `${siteUrl}/checkout/verify?reference=${encodeURIComponent(order.reference)}`,
+      // The token is what lets the return page prove the visitor was actually
+      // redirected here, rather than having guessed a four-digit reference.
+      callbackUrl: `${siteUrl}/checkout/verify?reference=${encodeURIComponent(order.reference)}&token=${createOrderAccessToken(order.reference)}`,
     });
 
     authorizationUrl = transaction.authorization_url;
