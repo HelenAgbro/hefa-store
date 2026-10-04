@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getAllProducts } from "@/lib/products-repository";
+import { getAllProducts, usingSupabase } from "@/lib/products-repository";
 import type { Product } from "@/lib/types";
 
 /**
@@ -56,7 +56,19 @@ export async function GET(request: Request) {
   }
 
   return NextResponse.json(
-    { products, count: products.length },
+    {
+      products,
+      count: products.length,
+      /**
+       * Whether this came from the database or from the offline fallback.
+       *
+       * Included because the two are indistinguishable in the product list
+       * itself — same ids, same prices — so a misconfigured environment looks
+       * like success from the outside. This makes a silent fallback visible
+       * rather than something to be discovered later.
+       */
+      source: usingSupabase ? "database" : "fallback",
+    },
     {
       headers: {
         "Cache-Control": "public, max-age=60, stale-while-revalidate=300",
