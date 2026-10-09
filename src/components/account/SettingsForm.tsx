@@ -3,7 +3,6 @@
 import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
-import { ACCOUNT_PROFILE } from "@/lib/data/account";
 
 interface SettingsValues {
   firstName: string;
@@ -12,16 +11,14 @@ interface SettingsValues {
   phone: string;
 }
 
-const INITIAL: SettingsValues = {
-  firstName: ACCOUNT_PROFILE.firstName,
-  lastName: ACCOUNT_PROFILE.lastName,
-  email: ACCOUNT_PROFILE.email,
-  phone: ACCOUNT_PROFILE.phone,
-};
-
-/** Editable profile form. DEMO ONLY — nothing is persisted. */
-export function SettingsForm() {
-  const [values, setValues] = useState<SettingsValues>(INITIAL);
+/**
+ * Editable profile form. DEMO ONLY — nothing is persisted.
+ *
+ * Seeded from the signed-in Supabase user by the settings page, so the fields
+ * show the customer's own details rather than placeholder data.
+ */
+export function SettingsForm({ initial }: { initial: SettingsValues }) {
+  const [values, setValues] = useState<SettingsValues>(initial);
   const [message, setMessage] = useState<string | null>(null);
 
   function update(field: keyof SettingsValues, value: string) {
@@ -89,7 +86,7 @@ export function SettingsForm() {
           variant="outline"
           size="md"
           onClick={() => {
-            setValues(INITIAL);
+            setValues(initial);
             setMessage(null);
           }}
         >

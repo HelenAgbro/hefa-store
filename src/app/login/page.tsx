@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { AuthAside } from "@/components/auth/AuthAside";
 import { AuthForm } from "@/components/auth/AuthForm";
 import { GoogleSignInButton } from "@/components/auth/GoogleSignInButton";
 import { Container } from "@/components/ui/Container";
+import { getCurrentUser } from "@/lib/auth/session";
 
 export const metadata: Metadata = {
   title: "Sign in",
@@ -15,6 +17,10 @@ interface LoginPageProps {
 
 /** Login page — Google sign-in and email/password, both backed by Supabase Auth. */
 export default async function LoginPage({ searchParams }: LoginPageProps) {
+  // Already signed in: the form is stale, so send the customer to their account
+  // instead of asking them to sign in a second time.
+  if (await getCurrentUser()) redirect("/account");
+
   const { message, error } = await searchParams;
 
   return (

@@ -29,13 +29,6 @@ export interface AccountOrder {
   items: OrderLine[];
 }
 
-export const ACCOUNT_PROFILE = {
-  firstName: "Helen",
-  lastName: "Agbro",
-  email: "helen@example.com",
-  phone: "+234 801 234 5678",
-} as const;
-
 export const ACCOUNT_ORDERS: AccountOrder[] = [
   {
     id: "ord-1001",

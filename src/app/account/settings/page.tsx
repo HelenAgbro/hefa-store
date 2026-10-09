@@ -1,10 +1,20 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { SettingsForm } from "@/components/account/SettingsForm";
+import { getCurrentUser, getNameParts } from "@/lib/auth/session";
 
 export const metadata: Metadata = { title: "Settings" };
 
-/** Account settings layout. Changes are not persisted (no backend yet). */
-export default function AccountSettingsPage() {
+/**
+ * Account settings. Changes are not persisted (no backend yet), but the form
+ * opens on the customer's own details rather than placeholder data.
+ */
+export default async function AccountSettingsPage() {
+  const user = await getCurrentUser();
+  if (!user) redirect("/login");
+
+  const { firstName, lastName } = getNameParts(user);
+
   return (
     <div className="flex flex-col gap-8">
       <div>
@@ -14,7 +24,14 @@ export default function AccountSettingsPage() {
         </p>
       </div>
 
-      <SettingsForm />
+      <SettingsForm
+        initial={{
+          firstName,
+          lastName,
+          email: user.email ?? "",
+          phone: user.phone ?? "",
+        }}
+      />
     </div>
   );
 }

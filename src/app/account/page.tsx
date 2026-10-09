@@ -1,28 +1,40 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { OrderStatusBadge } from "@/components/account/OrderStatusBadge";
 import { Button } from "@/components/ui/Button";
-import { ACCOUNT_ADDRESSES, ACCOUNT_ORDERS, ACCOUNT_PROFILE } from "@/lib/data/account";
+import { getDisplayName, getCurrentUser } from "@/lib/auth/session";
+import { ACCOUNT_ADDRESSES, ACCOUNT_ORDERS } from "@/lib/data/account";
 import { formatNaira } from "@/lib/format";
 
 export const metadata: Metadata = { title: "Account overview" };
 
-/** Account dashboard overview: profile summary, recent orders and default address. */
-export default function AccountOverviewPage() {
+/**
+ * Account dashboard overview: profile summary, recent orders and default address.
+ *
+ * Identity is read from the signed-in Supabase user. The account layout above
+ * has already rejected anyone without a session, so this cannot render for an
+ * anonymous visitor, but it still guards rather than assuming.
+ */
+export default async function AccountOverviewPage() {
+  const user = await getCurrentUser();
+  if (!user) redirect("/login");
+
   const recentOrders = ACCOUNT_ORDERS.slice(0, 3);
   const defaultAddress = ACCOUNT_ADDRESSES.find((address) => address.isDefault) ?? ACCOUNT_ADDRESSES[0];
 
   return (
     <div className="flex flex-col gap-10">
       <p className="border border-dashed border-black/20 bg-black/[0.02] px-4 py-3 text-xs leading-relaxed text-charcoal/70">
-        <strong className="font-medium text-black">Sample data.</strong> Orders are not yet loaded
-        from your account — this page shows placeholder examples while we finish that work.
+        <strong className="font-medium text-black">Sample data.</strong> Your details above are
+        live; orders and addresses below are placeholder examples while we finish that work.
       </p>
 
       <div>
-        <h2 className="text-2xl">Welcome back, {ACCOUNT_PROFILE.firstName}</h2>
+        <h2 className="text-2xl">Welcome back, {getDisplayName(user)}</h2>
         <p className="mt-2 text-sm text-charcoal/70">
-          {ACCOUNT_PROFILE.email} · {ACCOUNT_PROFILE.phone}
+          {user.email ?? user.phone ?? ""}
+          {user.email && user.phone ? ` · ${user.phone}` : null}
         </p>
       </div>
 

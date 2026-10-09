@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { AuthAside } from "@/components/auth/AuthAside";
 import { AuthForm } from "@/components/auth/AuthForm";
 import { GoogleSignInButton } from "@/components/auth/GoogleSignInButton";
 import { Container } from "@/components/ui/Container";
+import { getCurrentUser } from "@/lib/auth/session";
 
 export const metadata: Metadata = {
   title: "Create account",
@@ -15,6 +17,10 @@ interface SignupPageProps {
 
 /** Sign-up page — Google sign-up and email/password, both backed by Supabase Auth. */
 export default async function SignupPage({ searchParams }: SignupPageProps) {
+  // Already signed in: the form is stale, so send the customer to their account
+  // instead of asking them to register again.
+  if (await getCurrentUser()) redirect("/account");
+
   const { error } = await searchParams;
 
   return (
@@ -55,7 +61,10 @@ export default async function SignupPage({ searchParams }: SignupPageProps) {
             </div>
 
             {/* Decorative brand panel (desktop only). */}
-            <AuthAside image="/images/products/kehinde-relaxed-pant-1.jpg" tone="charcoal" />
+            <AuthAside
+              image="/images/products/kehinde-relaxed-pant-1.jpg"
+              tone="charcoal"
+            />
           </div>
         </Container>
       </section>

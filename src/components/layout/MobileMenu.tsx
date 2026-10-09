@@ -105,11 +105,11 @@ export function MobileMenu() {
 
             <div className="mt-auto flex flex-col gap-3 pt-8 text-xs uppercase tracking-[0.18em]">
               <Link
-                href="/login"
+                href="/account"
                 onClick={() => setOpen(false)}
                 className="text-charcoal transition-colors hover:text-burnt-orange"
               >
-                Sign In
+                Account
               </Link>
               <button
                 type="button"

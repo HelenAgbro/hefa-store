@@ -27,8 +27,11 @@ export function Header() {
         <Nav />
 
         <div className="flex items-center gap-4 sm:gap-6">
+          {/* Points at /account for everyone: the account layout sends
+              signed-out visitors on to /login, so one static link is correct
+              in both states and the header itself can stay static. */}
           <Link
-            href="/login"
+            href="/account"
             aria-label="Account"
             className="hidden text-charcoal transition-colors hover:text-burnt-orange sm:inline-flex"
           >
